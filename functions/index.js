@@ -141,3 +141,11 @@ exports.purchaseTrip = functions.https.onRequest(async (req, res) => {
       });
   return res.send({ ...trip.data(), arrival, departure });
 });
+
+exports.getPurchased = functions.https.onRequest(async (req, res) => {
+  const currentUser = "MKR1tZiG5FcE8uMe7lCK";
+  const db = admin.firestore();
+  let snapshot = await db.collection("users").doc(currentUser).get();
+  let trips = snapshot.data().purchased;
+  res.send(trips);
+});
